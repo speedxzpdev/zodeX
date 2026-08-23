@@ -1,0 +1,48 @@
+{
+  "name": "zodex",
+  "version": "1.0.0",
+  "description": "Zodex - YouTube downloader",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "set ELECTRON_RUN_AS_NODE=&& npx tsc && electron .",
+    "build:electron": "xcopy /E /I /Y src\\public dist\\public && electron-builder",
+    "build:tsc": "tsc",
+    "build:all": "npm run build:tsc && npm run build:electron"
+  },
+  "build": {
+    "appId": "com.speedxzpdev.zodex",
+    "productName": "Zodex",
+
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+
+    "extraResources": [
+      {
+        "from": "bin",
+        "to": "bin"
+      }
+    ],
+
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/icons/app.ico"
+    },
+
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "electron": "^43.4.1",
+    "typescript": "^7.0.2",
+    "electron-builder": "^26.0.0"
+  }
+}

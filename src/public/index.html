@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Zodex</title>
+</head>
+
+<body>
+
+    <div class="box">
+        <form id="download-form">
+        <input
+            id="url"
+            type="text"
+            placeholder="Your Link!"
+        >
+
+        <label>
+            <input type="radio" name="option" value="music">
+            Music
+        </label>
+
+        <label>
+            <input type="radio" name="option" value="video">
+            Video
+        </label>
+
+        <p id="status"></p>
+
+        <button type="submit" id="download">
+            Download
+        </button>
+
+
+    </form>
+    </div>
+    
+
+    <script src="../../dist/public/renderer.js" type="module"></script>
+</body>
+</html>
