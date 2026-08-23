@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu, ipcMain } from 'electron';
 import path from "node:path"
 import { fileURLToPath } from "node:url";
 import downloadHelper from './func/download.js';
+import { startRPC } from './func/discordRPC.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,7 @@ function startWindow(): void {
 }
 
 app.whenReady().then(() => {
-    Menu.setApplicationMenu(null);
-    startWindow();
+  Menu.setApplicationMenu(null);
+  startWindow();
+  startRPC();
 });
