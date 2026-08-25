@@ -19,9 +19,27 @@ async function downloadHelper(url: string, option: string): Promise<Download> {
 
     const ytDlpPath = path.join(binFolder, "yt-dlp.exe");
 
+    if(!ytDlpPath) {
+        await dialog.showMessageBox({
+                    type: "error",
+                    title: "ZodeX",
+                    message: "yt-dlp it wasn't found"
+                });
+        return({message: "yt-dlp it wasn't found", success: false});
+    }
+
+    if(!url || !option) {
+        await dialog.showMessageBox({
+                    type: "error",
+                    title: "ZodeX",
+                    message: "Missing parameters."
+                });
+                return({message: "Missing parameters.", success: false});
+    }
+
     
 
-  return new Promise<Download>(async (resolve, reject) => {
+    return new Promise<Download>(async (resolve, reject) => {
         editRPC("Downloading...", url);
 
         const folderInteract = await dialog.showOpenDialog({
@@ -29,6 +47,11 @@ async function downloadHelper(url: string, option: string): Promise<Download> {
     });
 
         if(folderInteract.canceled) {
+            await dialog.showMessageBox({
+                    type: "error",
+                    title: "ZodeX",
+                    message: "Please select an output folder."
+                });
             return reject(new Error("Not Found."));
         }
 
@@ -46,22 +69,38 @@ async function downloadHelper(url: string, option: string): Promise<Download> {
             console.error(`[yt-dlp ERROR] ${data}`);
         });
 
-        processSpawn.on("close", (code) => {
+        processSpawn.on("close", async (code) => {
             if (code === 0) {
-              editRPC("Downloading successful!", url);
-              resolve({
+                
+                editRPC("Downloading successful!", url);
+                await dialog.showMessageBox({
+                    type: "info",
+                    title: "ZodeX",
+                    message: "Downloading Successful!"
+                });
+                resolve({
                     success: true,
                     message: `Downloading completed successfully in ${output}`
                 });
             } else {
+                await dialog.showMessageBox({
+                    type: "error",
+                    title: "ZodeX",
+                    message: `Yt-dlp exited with code ${code}`
+                });
                 reject(
                     new Error(`Yt-dlp exited with code ${code}`)
                 );
             }
         });
 
-        processSpawn.on("error", (error) => {
+        processSpawn.on("error", async (error) => {
             console.error(error);
+            await dialog.showMessageBox({
+                    type: "error",
+                    title: "ZodeX",
+                    message: error.message
+                });
             reject(error);
         })
     });

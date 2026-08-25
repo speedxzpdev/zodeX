@@ -30,10 +30,7 @@ downloadForm?.addEventListener("submit", async (event) => {
     if(!optionInput) {
         return status.textContent = "What's the option?"
     }
-    if (!window.electronAPI) {
-        status.textContent = 'Electron API indisponível. Inicie o app com npm run dev.';
-        return;
-    }
+
 
     const stopLoading = startLoading(status);
 
